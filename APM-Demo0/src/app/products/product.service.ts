@@ -13,14 +13,14 @@ export class ProductService {
   private productsUrl = 'api/products';
   private products: Product[];
 
-  private selectedProductSource = new BehaviorSubject<Product | null>(null);
-  selectedProductChanges$ = this.selectedProductSource.asObservable();
+  // private selectedProductSource = new BehaviorSubject<Product | null>(null);
+  // selectedProductChanges$ = this.selectedProductSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
-  changeSelectedProduct(selectedProduct: Product | null): void {
-    this.selectedProductSource.next(selectedProduct);
-  }
+  // changeSelectedProduct(selectedProduct: Product | null): void {
+  //   this.selectedProductSource.next(selectedProduct);
+  // }
 
   getProducts(): Observable<Product[]> {
     if (this.products) {
