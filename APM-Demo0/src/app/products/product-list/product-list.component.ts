@@ -16,7 +16,6 @@ import { takeWhile } from 'rxjs/operators';
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   pageTitle = 'Products';
-  errorMessage: string;
   componentActive = true;
   products$: Observable<Product[]>;
 
@@ -25,6 +24,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   sub: Subscription;
   displayCode$: Observable<boolean>;
   selectedProduct$: Observable<Product>;
+  errorMessage$: Observable<string>;
 
   constructor(
     private productService: ProductService,
@@ -56,6 +56,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     //   });
     this.products$ = this.store.pipe(select(fromProduct.getProducts));
 
+    this.errorMessage$ = this.store.pipe(select(fromProduct.getError));
     // TODO: Unsubscribe
     // this.store.pipe(select(fromProduct.getShowProductCode), takeWhile(() => this.componentActive))
     //   .subscribe(showProductCode => {

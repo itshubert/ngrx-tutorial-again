@@ -14,7 +14,7 @@
               <input class="form-control"
                [ngClass]="{'is-invalid': (userNameVar.touched || userNameVar.dirty) && !userNameVar.valid }"
                id="userNameId"
-               [type]= "maskUserName ? 'password' : 'text'"
+               [type]= "(maskUsername$ | async) ? 'password' : 'text'"
                placeholder="User Name (required)"
                required
                ngModel
@@ -71,7 +71,7 @@
             <input class="form-check-input" 
                    type="checkbox" 
                    (change)="checkChanged($event.target.checked)" 
-                   [checked]="maskUserName">
+                   [checked]="maskUsername$ | async">
             Mask user name
           </label>
         </div>

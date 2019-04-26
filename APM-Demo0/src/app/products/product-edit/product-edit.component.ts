@@ -12,6 +12,7 @@ import { NumberValidators } from '../../shared/number.validator';
 import { Store, select } from '@ngrx/store';
 import * as fromProduct from '../state/product.reducer';
 import * as productActions from '../state/product.actions';
+import { takeWhile } from 'rxjs/operators';
 
 @Component({
   selector: 'pm-product-edit',
@@ -22,6 +23,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   pageTitle = 'Product Edit';
   errorMessage = '';
   productForm: FormGroup;
+  componentActive = true;
 
   product: Product | null;
 
@@ -72,17 +74,19 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     // this.productService.selectedProductChanges$.subscribe(
     //   selectedProduct => this.displayProduct(selectedProduct)
     // );
-    this.store.pipe(select(fromProduct.getCurrentProduct))
+    this.store.pipe(select(fromProduct.getCurrentProduct), takeWhile(() => this.componentActive))
       .subscribe(currentProduct => this.displayProduct(currentProduct)
     );
 
     // Watch for value changes
     this.productForm.valueChanges.subscribe(
-      value => this.displayMessage = this.genericValidator.processMessages(this.productForm)
+      value => this.displayMessage = this.genericValidator.processMessages(this.productForm),
+      takeWhile(() => this.componentActive)
     );
   }
 
   ngOnDestroy(): void {
+    this.componentActive = false;
   }
 
   // Also validate on blur

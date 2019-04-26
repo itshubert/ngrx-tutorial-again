@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { Store, select } from '@ngrx/store';
 import * as fromUsers from './state/user.reducer';
 import * as userActions from './state/user.actions';
+import { Observable } from 'rxjs';
 
 @Component({
   templateUrl: './login.component.html',
@@ -16,6 +17,7 @@ export class LoginComponent implements OnInit {
   errorMessage: string;
 
   maskUserName: boolean;
+  maskUsername$: Observable<boolean>;
 
   constructor(
     private authService: AuthService,
@@ -31,8 +33,11 @@ export class LoginComponent implements OnInit {
     //     }
     //   });
     // replaced with
-    this.store.pipe(select(fromUsers.getMaskUsername))
-      .subscribe(maskUsername => this.maskUserName = maskUsername);
+
+    // this.store.pipe(select(fromUsers.getMaskUsername))
+    //   .subscribe(maskUsername => this.maskUserName = maskUsername);
+
+    this.maskUsername$ = this.store.pipe(select(fromUsers.getMaskUsername));
   }
 
   cancel(): void {
