@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from './auth.service';
 import { Store, select } from '@ngrx/store';
 import * as fromUsers from './state/user.reducer';
+import * as userActions from './state/user.actions';
 
 @Component({
   templateUrl: './login.component.html',
@@ -31,10 +32,7 @@ export class LoginComponent implements OnInit {
     //   });
     // replaced with
     this.store.pipe(select(fromUsers.getMaskUsername))
-      .subscribe(maskUsername => {
-        console.log('changed mask!');
-        this.maskUserName = maskUsername;
-      });
+      .subscribe(maskUsername => this.maskUserName = maskUsername);
   }
 
   cancel(): void {
@@ -42,10 +40,7 @@ export class LoginComponent implements OnInit {
   }
 
   checkChanged(value: boolean): void {
-    this.store.dispatch({
-      type: 'TOGGLE_MASK',
-      payload: value
-    });
+    this.store.dispatch(new userActions.MaskUsername(value));
   }
 
   login(loginForm: NgForm): void {

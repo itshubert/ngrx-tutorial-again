@@ -1,6 +1,6 @@
 export function testreducer(state, action) {
-    console.log('Test Reducer');
-    console.log(state);
+    // console.log('Test Reducer');
+    // console.log(state);
     switch (action.type) {
         case 'TOGGLE_PRODUCT_CODE':
             return {

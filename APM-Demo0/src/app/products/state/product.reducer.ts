@@ -37,7 +37,8 @@ export const getProducts = createSelector(
 );
 
 export function reducer(state = initialState, action: ProductActions): ProductState {
-    console.log('Product Reducer');
+    // console.log('Product Reducer');
+    // console.log('Picked up action type:', action.type);
     switch (action.type) {
         case ProductActionTypes.ToggleProductCode:
             return { ...state, showProductCode: action.payload };
@@ -53,6 +54,11 @@ export function reducer(state = initialState, action: ProductActions): ProductSt
                 description: '',
                 starRating: 0
               }};
+        case ProductActionTypes.LoadSuccess:
+              return {
+                  ...state,
+                  products: action.payload
+              };
         default:
             return state;
     }
